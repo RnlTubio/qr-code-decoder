@@ -505,8 +505,8 @@ export default function QRCodeApp() {
   if (!librariesLoaded) {
     return (
       <div className={`min-h-screen flex items-center justify-center ${darkMode
-        ? 'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900'
-        : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
+        ? 'bg-linear-to-br from-slate-900 via-purple-900 to-slate-900'
+        : 'bg-linear-to-br from-blue-50 via-purple-50 to-pink-50'
         }`}>
         <div className="text-center">
           <div className={`animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-4 border-t-transparent mx-auto mb-4 sm:mb-6 ${darkMode ? 'border-purple-500' : 'border-purple-600'
@@ -520,12 +520,11 @@ export default function QRCodeApp() {
   }
   return (
     <div className={`min-h-screen transition-colors duration-300 ${darkMode
-      ? 'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900'
-      : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
+      ? 'bg-linear-to-br from-slate-900 via-purple-900 to-slate-900'
+      : 'bg-linear-to-br from-blue-50 via-purple-50 to-pink-50'
       }`}>
       <nav className={`sticky top-0 z-50 w-full backdrop-blur-sm transition-colors duration-300 ${darkMode ? 'bg-slate-800/90 shadow-lg' : 'bg-white/90 shadow-md'}`}>
         <div className="max-w-7xl mx-auto px-2 xs:px-4 sm:px-6 py-2 sm:py-3 lg:py-4 flex items-center justify-between">
-          {/* Left side: QR icon + title */}
           <div className="flex items-center gap-2 xs:gap-3">
             <div className={`inline-block p-1.5 xs:p-2 sm:p-3 rounded-lg sm:rounded-xl ${darkMode ? 'bg-purple-900/40' : 'bg-white shadow-md'}`}>
               <QrCode className={`w-5 h-5 xs:w-6 xs:h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 ${darkMode ? 'text-purple-400' : 'text-purple-600'}`} />
@@ -535,12 +534,10 @@ export default function QRCodeApp() {
                 QR Gen/Code
               </h1>
               <p className={`text-xs xs:text-xs sm:text-sm ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-                Generate & decode QR codes
+                Generate & decode QR codes instantly for FREE!
               </p>
             </div>
           </div>
-
-          {/* Right side: dark mode toggle */}
           <button
             onClick={toggleDarkMode}
             className={`p-1.5 xs:p-2 rounded-full transition-all ${darkMode ? 'bg-slate-800 text-yellow-400 hover:bg-slate-700' : 'bg-white text-slate-700 hover:bg-slate-100 shadow-md'}`}
