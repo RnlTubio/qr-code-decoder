@@ -207,7 +207,6 @@ export default function QRCodeApp() {
       }`}>
       <div className="min-h-screen py-4 sm:py-8 px-3 sm:px-4">
         <div className="max-w-3xl mx-auto">
-          {/* Header */}
           <div className="text-center mb-6 sm:mb-8 relative">
             <button
               onClick={toggleDarkMode}
@@ -232,12 +231,10 @@ export default function QRCodeApp() {
             </p>
           </div>
 
-          {/* Main Card */}
           <div className={`rounded-3xl overflow-hidden backdrop-blur-sm ${darkMode
             ? 'bg-slate-800/50 border border-slate-700/50 shadow-2xl'
             : 'bg-white/80 shadow-2xl border border-white'
             }`}>
-            {/* Tabs */}
             <div className="flex border-b border-slate-700/50">
               <button
                 onClick={() => setActiveTab('generate')}
@@ -276,8 +273,6 @@ export default function QRCodeApp() {
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
-
-              {/* Generate Tab */}
               {activeTab === 'generate' && (
                 <div className="space-y-4 sm:space-y-6">
                   <div>
@@ -333,8 +328,6 @@ export default function QRCodeApp() {
                   )}
                 </div>
               )}
-
-              {/* Decode Tab */}
               {activeTab === 'decode' && (
                 <div className="space-y-4 sm:space-y-6">
                   <div className={`border-2 border-dashed rounded-2xl p-6 sm:p-12 text-center transition-all ${darkMode
@@ -424,8 +417,6 @@ export default function QRCodeApp() {
               )}
             </div>
           </div>
-
-          {/* Footer */}
           <div className={`mt-6 sm:mt-8 text-center space-y-2 ${darkMode ? 'text-slate-400' : 'text-slate-600'
             }`}>
             <p className="text-xs sm:text-sm">Powered by QRCode.js and jsQR libraries</p>
