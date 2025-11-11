@@ -527,7 +527,17 @@ export default function QRCodeApp() {
         <div className="max-w-7xl mx-auto px-2 xs:px-4 sm:px-6 py-2 sm:py-3 lg:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2 xs:gap-3">
             <div className={`inline-block p-1.5 xs:p-2 sm:p-3 rounded-lg sm:rounded-xl ${darkMode ? 'bg-purple-900/40' : 'bg-white shadow-md'}`}>
-              <QrCode className={`w-5 h-5 xs:w-6 xs:h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 ${darkMode ? 'text-purple-400' : 'text-purple-600'}`} />
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.reload();
+                }}
+                className="transition-opacity hover:opacity-75"
+                title="Refresh page"
+              >
+                <QrCode className={`w-5 h-5 xs:w-6 xs:h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 ${darkMode ? 'text-purple-400' : 'text-purple-600'}`} />
+              </a>
             </div>
             <div className="hidden sm:block">
               <h1 className={`text-base xs:text-lg sm:text-xl lg:text-2xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
@@ -548,8 +558,8 @@ export default function QRCodeApp() {
         </div>
       </nav>
 
-      <div className="min-h-screen py-3 xs:py-4 sm:py-6 lg:py-8 px-2 xs:px-3 sm:px-4 lg:px-6">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen py-3 xs:py-4 sm:py-6 lg:py-8 px-2 xs:px-3 sm:px-4 lg:px-6 ">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 lg:px-8 ">
           <div className={`rounded-2xl xs:rounded-2xl overflow-hidden backdrop-blur-sm ${darkMode
             ? 'bg-slate-800/50 border border-slate-700/50 shadow-2xl'
             : 'bg-white/80 shadow-2xl border border-white'
