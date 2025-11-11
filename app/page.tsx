@@ -558,7 +558,7 @@ export default function QRCodeApp() {
         </div>
       </nav>
 
-      <div className="min-h-screen py-3 xs:py-4 sm:py-6 lg:py-8 px-2 xs:px-3 sm:px-4 lg:px-6 ">
+      <div className="py-3 xs:py-4 sm:py-6 lg:py-8 px-2 xs:px-3 sm:px-4 lg:px-6 ">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 ">
           <div className={`rounded-2xl xs:rounded-2xl overflow-hidden backdrop-blur-sm ${darkMode
             ? 'bg-slate-800/50 border border-slate-700/50 shadow-2xl'
