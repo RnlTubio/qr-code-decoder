@@ -419,7 +419,7 @@ export default function QRCodeApp() {
           </div>
           <div className={`mt-6 sm:mt-8 text-center space-y-2 ${darkMode ? 'text-slate-400' : 'text-slate-600'
             }`}>
-            <p className="text-xs sm:text-sm">Powered by QRCode.js and jsQR libraries</p>
+
             <div className="flex items-center justify-center gap-2 text-xs sm:text-sm">
               <span>Developed by</span>
               <a
