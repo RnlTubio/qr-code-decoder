@@ -109,8 +109,8 @@ export default function QRCodeApp() {
         text: text,
         width: 300,
         height: 300,
-        colorDark: darkMode ? '#ffffff' : '#000000',
-        colorLight: darkMode ? '#1a1a1a' : '#ffffff',
+        colorDark: '#000000',
+        colorLight: '#ffffff',
         correctLevel: window.QRCode.CorrectLevel.H
       });
       setTimeout(() => {
@@ -504,17 +504,17 @@ export default function QRCodeApp() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Modern Navigation */}
-      <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <nav className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-slate-950/60">
         <div className="container flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 shadow-sm ring-1 ring-primary/20">
-              <QrCode className="h-6 w-6 text-primary" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500/20 to-indigo-500/20 dark:from-blue-500/30 dark:to-indigo-500/30 shadow-sm ring-1 ring-blue-500/30 dark:ring-blue-500/40">
+              <QrCode className="h-6 w-6 text-blue-600 dark:text-blue-400" />
             </div>
             <div className="flex flex-col justify-center">
-              <h1 className="text-xl font-bold tracking-tight leading-none">QR Gen/Code</h1>
-              <p className="text-xs text-muted-foreground leading-none mt-0.5">Fast & Free QR Tools</p>
+              <h1 className="text-xl font-bold tracking-tight leading-none text-slate-900 dark:text-slate-100">QR Gen/Code</h1>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-none mt-0.5">Fast & Free QR Tools</p>
             </div>
           </div>
 
@@ -522,10 +522,10 @@ export default function QRCodeApp() {
             variant="outline"
             size="icon"
             onClick={toggleDarkMode}
-            className="relative overflow-hidden h-10 w-10"
+            className="relative overflow-hidden h-10 w-10 border-slate-200 dark:border-slate-800"
           >
-            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-amber-500" />
+            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-blue-400" />
             <span className="sr-only">Toggle theme</span>
           </Button>
         </div>
@@ -535,32 +535,32 @@ export default function QRCodeApp() {
       <div className="container mx-auto px-4 py-8 md:py-12">
         <div className="mx-auto max-w-4xl">
           <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'generate' | 'decode')} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-8">
-              <TabsTrigger value="generate" className="text-base">
+            <TabsList className="grid w-full grid-cols-2 mb-8 bg-slate-100 dark:bg-slate-900">
+              <TabsTrigger value="generate" className="text-base data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800">
                 Generate
               </TabsTrigger>
-              <TabsTrigger value="decode" className="text-base">
+              <TabsTrigger value="decode" className="text-base data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800">
                 <Upload className="mr-2 h-4 w-4" />
                 Decode
               </TabsTrigger>
             </TabsList>
 
             {error && (
-              <Alert variant="destructive" className="mb-6">
+              <Alert variant="destructive" className="mb-6 border-red-200 dark:border-red-900">
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
 
             {/* Generate Tab */}
             <TabsContent value="generate" className="space-y-6">
-              <Card>
+              <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur">
                 <CardHeader>
-                  <CardTitle>Create QR Code</CardTitle>
-                  <CardDescription>Enter any text or URL to generate a QR code instantly</CardDescription>
+                  <CardTitle className="text-slate-900 dark:text-slate-100">Create QR Code</CardTitle>
+                  <CardDescription className="text-slate-600 dark:text-slate-400">Enter any text or URL to generate a QR code instantly</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <label htmlFor="qr-text" className="text-sm font-medium">
+                    <label htmlFor="qr-text" className="text-sm font-medium text-slate-900 dark:text-slate-100">
                       Text or URL
                     </label>
                     <Textarea
@@ -569,24 +569,24 @@ export default function QRCodeApp() {
                       onChange={(e) => setText(e.target.value)}
                       placeholder="https://example.com or any text..."
                       rows={4}
-                      className="resize-none"
+                      className="resize-none bg-white dark:bg-slate-950 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100"
                     />
                   </div>
 
-                  <Button onClick={generateQRCode} className="w-full" size="lg">
+                  <Button onClick={generateQRCode} className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600" size="lg">
                     Generate QR Code
                   </Button>
 
                   <canvas ref={qrCanvasRef} className="hidden" />
 
                   {qrCodeUrl && (
-                    <Card className="mt-6 overflow-hidden">
+                    <Card className="mt-6 overflow-hidden border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/30">
                       <CardContent className="p-6 space-y-4">
-                        <div className="flex justify-center bg-muted/30 p-8 rounded-lg">
+                        <div className="flex justify-center bg-white dark:bg-white p-8 rounded-lg shadow-inner">
                           <img
                             src={qrCodeUrl}
                             alt="QR Code"
-                            className="rounded-lg shadow-2xl w-64 h-64"
+                            className="rounded-lg shadow-xl w-64 h-64"
                           />
                         </div>
                         <Button onClick={downloadQRCode} className="w-full" variant="outline" size="lg">
@@ -602,26 +602,27 @@ export default function QRCodeApp() {
 
             {/* Decode Tab */}
             <TabsContent value="decode" className="space-y-6">
-              <Card>
+              <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur">
                 <CardHeader>
-                  <CardTitle>Decode QR Code</CardTitle>
-                  <CardDescription>Upload a QR code image to extract its content</CardDescription>
+                  <CardTitle className="text-slate-900 dark:text-slate-100">Decode QR Code</CardTitle>
+                  <CardDescription className="text-slate-600 dark:text-slate-400">Upload a QR code image to extract its content</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="border-2 border-dashed rounded-lg p-12 text-center hover:border-primary transition-colors cursor-pointer"
+                  <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-lg p-12 text-center hover:border-blue-500 dark:hover:border-blue-400 transition-colors cursor-pointer bg-slate-50 dark:bg-slate-950/50"
                     onClick={handleFileSelect}>
-                    <Upload className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
-                    <p className="text-lg mb-4 text-muted-foreground">
+                    <Upload className="w-16 h-16 mx-auto mb-4 text-slate-400 dark:text-slate-600" />
+                    <p className="text-lg mb-4 text-slate-700 dark:text-slate-300">
                       Upload a QR code image to decode
                     </p>
                     <Button
                       disabled={isDecoding}
                       size="lg"
                       type="button"
+                      className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
                     >
                       {isDecoding ? 'Decoding...' : 'Choose File'}
                     </Button>
-                    <p className="text-xs mt-4 text-muted-foreground">
+                    <p className="text-xs mt-4 text-slate-500 dark:text-slate-500">
                       Supports: JPG, PNG, GIF, WebP
                     </p>
                   </div>
@@ -638,30 +639,30 @@ export default function QRCodeApp() {
 
                   {isDecoding && (
                     <div className="text-center py-12">
-                      <div className="animate-spin rounded-full h-16 w-16 border-4 border-t-transparent mx-auto border-primary"></div>
-                      <p className="mt-6 text-lg text-muted-foreground">
+                      <div className="animate-spin rounded-full h-16 w-16 border-4 border-t-transparent mx-auto border-blue-600 dark:border-blue-400"></div>
+                      <p className="mt-6 text-lg text-slate-600 dark:text-slate-400">
                         Decoding QR code...
                       </p>
                     </div>
                   )}
 
                   {qrAnalysis && !isDecoding && (
-                    <Card className="mt-6">
+                    <Card className="mt-6 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
                       <CardHeader>
                         <div className="flex items-center justify-between">
-                          <CardTitle className="flex items-center gap-2">
+                          <CardTitle className="flex items-center gap-2 text-slate-900 dark:text-slate-100">
                             {getIconForType(qrAnalysis.parsedResultType)}
                             QR Code Analysis
                           </CardTitle>
-                          <Badge variant="secondary">{qrAnalysis.parsedResultType}</Badge>
+                          <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900/50 text-blue-900 dark:text-blue-100">{qrAnalysis.parsedResultType}</Badge>
                         </div>
                       </CardHeader>
                       <CardContent className="space-y-4">
-                        <div className="rounded-lg border bg-card">
-                          <div className="flex items-start gap-3 p-4 border-b">
+                        <div className="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50">
+                          <div className="flex items-start gap-3 p-4 border-b border-slate-200 dark:border-slate-800">
                             <div className="flex-1 min-w-0">
-                              <h4 className="font-semibold mb-2 text-primary">Decoded Content</h4>
-                              <div className="text-sm text-foreground">
+                              <h4 className="font-semibold mb-2 text-blue-600 dark:text-blue-400">Decoded Content</h4>
+                              <div className="text-sm text-slate-900 dark:text-slate-100">
                                 {renderParsedResult(qrAnalysis.parsedResult, qrAnalysis.parsedResultType)}
                               </div>
                             </div>
@@ -669,50 +670,51 @@ export default function QRCodeApp() {
                               variant="outline"
                               size="icon"
                               onClick={() => copyToClipboard(qrAnalysis.rawText)}
+                              className="border-slate-200 dark:border-slate-700"
                             >
-                              {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                              {copied ? <Check className="h-4 w-4 text-green-600 dark:text-green-400" /> : <Copy className="h-4 w-4" />}
                             </Button>
                           </div>
 
-                          <div className="p-4 border-b">
-                            <h4 className="font-semibold mb-2 text-primary flex items-center gap-2">
+                          <div className="p-4 border-b border-slate-200 dark:border-slate-800">
+                            <h4 className="font-semibold mb-2 text-blue-600 dark:text-blue-400 flex items-center gap-2">
                               <FileText className="h-4 w-4" />
                               Raw Text
                             </h4>
-                            <p className="text-sm break-all text-foreground">{qrAnalysis.rawText}</p>
+                            <p className="text-sm break-all text-slate-900 dark:text-slate-100">{qrAnalysis.rawText}</p>
                           </div>
 
-                          <div className="p-4 border-b">
-                            <h4 className="font-semibold mb-2 text-primary flex items-center gap-2">
+                          <div className="p-4 border-b border-slate-200 dark:border-slate-800">
+                            <h4 className="font-semibold mb-2 text-blue-600 dark:text-blue-400 flex items-center gap-2">
                               <Info className="h-4 w-4" />
                               Metadata
                             </h4>
                             <div className="space-y-1 text-sm">
                               <div className="flex items-center gap-2">
-                                <span className="font-medium text-primary">Format:</span>
-                                <Badge variant="outline">{qrAnalysis.qrFormat}</Badge>
+                                <span className="font-medium text-slate-700 dark:text-slate-300">Format:</span>
+                                <Badge variant="outline" className="border-slate-300 dark:border-slate-700">{qrAnalysis.qrFormat}</Badge>
                               </div>
                               {qrAnalysis.metadata.version && (
                                 <div className="flex items-center gap-2">
-                                  <span className="font-medium text-primary">Version:</span>
-                                  <span>{qrAnalysis.metadata.version}</span>
+                                  <span className="font-medium text-slate-700 dark:text-slate-300">Version:</span>
+                                  <span className="text-slate-900 dark:text-slate-100">{qrAnalysis.metadata.version}</span>
                                 </div>
                               )}
                               {qrAnalysis.metadata.maskPattern !== undefined && (
                                 <div className="flex items-center gap-2">
-                                  <span className="font-medium text-primary">Mask Pattern:</span>
-                                  <span>{qrAnalysis.metadata.maskPattern}</span>
+                                  <span className="font-medium text-slate-700 dark:text-slate-300">Mask Pattern:</span>
+                                  <span className="text-slate-900 dark:text-slate-100">{qrAnalysis.metadata.maskPattern}</span>
                                 </div>
                               )}
                             </div>
                           </div>
 
                           <div className="p-4">
-                            <h4 className="font-semibold mb-2 text-primary flex items-center gap-2">
+                            <h4 className="font-semibold mb-2 text-blue-600 dark:text-blue-400 flex items-center gap-2">
                               <Binary className="h-4 w-4" />
                               Raw Bytes
                             </h4>
-                            <p className="text-xs font-mono break-all text-foreground">{qrAnalysis.rawBytes}</p>
+                            <p className="text-xs font-mono break-all text-slate-700 dark:text-slate-300">{qrAnalysis.rawBytes}</p>
                           </div>
                         </div>
                       </CardContent>
@@ -723,17 +725,17 @@ export default function QRCodeApp() {
             </TabsContent>
           </Tabs>
 
-          <Separator className="my-8" />
+          <Separator className="my-8 bg-slate-200 dark:bg-slate-800" />
 
           {/* Footer */}
-          <div className="text-center space-y-2 text-muted-foreground">
+          <div className="text-center space-y-2 text-slate-600 dark:text-slate-400">
             <p className="text-sm flex items-center justify-center gap-2">
               <span>Developed by</span>
               <a
                 href="https://www.facebook.com/ronel.ftubio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold hover:underline transition-colors text-primary hover:text-primary/80"
+                className="font-semibold hover:underline transition-colors text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
               >
                 Ronel Tubio
               </a>
