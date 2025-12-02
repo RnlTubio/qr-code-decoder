@@ -29,6 +29,32 @@ export const metadata: Metadata = {
     "QR code tool",
     "Next.js QR app"
   ],
+  metadataBase: new URL("https://qrcodedecoderfree.vercel.app"),
+  openGraph: {
+    title: "Qr Code Gen/Code - Free Online QR Generator & Decoder",
+    description: "Generate and decode QR codes instantly for free. No sign-up required — create, scan, and share your QR codes with ease.",
+    url: "https://qrcodedecoderfree.vercel.app",
+    siteName: "Qr Code Gen/Code",
+    images: [
+      {
+        url: "/og-image.png", // We might need to create this later or use a default
+        width: 1200,
+        height: 630,
+        alt: "Qr Code Gen/Code Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Qr Code Gen/Code - Free Online QR Generator & Decoder",
+    description: "Generate and decode QR codes instantly for free. No sign-up required.",
+    images: ["/og-image.png"], // Consistent with OG
+  },
+  verification: {
+    google: "KxYGgeNKjAvXWZk_8wGMkW6C8FUp5tdunskFEwEuPqI",
+  },
 };
 
 export default function RootLayout({
