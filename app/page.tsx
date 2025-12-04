@@ -513,8 +513,8 @@ export default function QRCodeApp() {
               <QrCode className="h-6 w-6 text-blue-600 dark:text-blue-400" />
             </div>
             <div className="flex flex-col justify-center">
-              <h1 className="text-xl font-bold tracking-tight leading-none text-slate-900 dark:text-slate-100">QR Gen/Code</h1>
-              <p className="text-xs text-slate-600 dark:text-slate-400 leading-none mt-0.5">Fast & Free QR Tools</p>
+              <h1 className="text-xl font-bold tracking-tight leading-none text-slate-900 dark:text-slate-100">QR Code Generator</h1>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-none mt-0.5">Free & Secure QR Tools</p>
             </div>
           </div>
 
@@ -725,7 +725,330 @@ export default function QRCodeApp() {
             </TabsContent>
           </Tabs>
 
-          <Separator className="my-8 bg-slate-200 dark:bg-slate-800" />
+          {/* SEO Content Sections */}
+          <div className="mt-16 space-y-16">
+            {/* Features Section */}
+            <section className="space-y-6">
+              <div className="text-center space-y-3">
+                <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+                  Why Choose Our QR Code Generator & Decoder?
+                </h2>
+                <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                  The fastest and most reliable free QR code tool for all your needs
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-3">
+                      <QrCode className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <CardTitle className="text-lg">100% Free</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Generate and decode unlimited QR codes. No hidden fees, no premium plans, completely free forever.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-3">
+                      <Check className="h-6 w-6 text-green-600 dark:text-green-400" />
+                    </div>
+                    <CardTitle className="text-lg">No Sign-Up</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Start creating and scanning QR codes instantly. No registration, no account required.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-3">
+                      <Download className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <CardTitle className="text-lg">Instant Download</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Download your QR codes as high-quality PNG images ready for print or digital use.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <div className="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center mb-3">
+                      <Upload className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+                    </div>
+                    <CardTitle className="text-lg">Smart Decoder</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Upload any QR code image and instantly decode URLs, WiFi, contacts, and more.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </section>
+
+            {/* How It Works Section */}
+            <section className="space-y-6">
+              <div className="text-center space-y-3">
+                <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+                  How to Use Our QR Code Tool
+                </h2>
+                <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                  Simple steps to generate or decode QR codes in seconds
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 gap-8">
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <CardTitle className="text-xl flex items-center gap-2">
+                      <QrCode className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                      Generate QR Code
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-semibold">
+                        1
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">Enter Your Content</h4>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                          Type or paste any text, URL, WiFi credentials, or contact information in the input field.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-semibold">
+                        2
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">Click Generate</h4>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                          Press the "Generate QR Code" button and your QR code will be created instantly.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-semibold">
+                        3
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">Download & Share</h4>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                          Download your QR code as a PNG image and use it anywhere you need.
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <CardTitle className="text-xl flex items-center gap-2">
+                      <Upload className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                      Decode QR Code
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-semibold">
+                        1
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">Upload QR Image</h4>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                          Click the upload area and select a QR code image from your device (JPG, PNG, GIF, WebP).
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-semibold">
+                        2
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">Automatic Decode</h4>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                          Our tool instantly analyzes and decodes the QR code content.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-semibold">
+                        3
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">View Results</h4>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                          See detailed analysis including content type, raw data, and metadata.
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </section>
+
+            {/* FAQ Section */}
+            <section className="space-y-6">
+              <div className="text-center space-y-3">
+                <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+                  Frequently Asked Questions
+                </h2>
+                <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                  Everything you need to know about our QR code generator and decoder
+                </p>
+              </div>
+              <div className="max-w-3xl mx-auto space-y-4">
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Is this QR code generator free?</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-slate-600 dark:text-slate-400">
+                      Yes, our QR code generator and decoder is 100% free to use. There are no hidden fees, no sign-up required, and no limits on how many QR codes you can create or decode.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <CardTitle className="text-lg">How do I generate a QR code?</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-slate-600 dark:text-slate-400">
+                      Simply enter your text or URL in the generator tab, click "Generate QR Code", and your QR code will be created instantly. You can then download it as a PNG image.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Can I decode QR codes from images?</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-slate-600 dark:text-slate-400">
+                      Yes! Upload any QR code image in the decoder tab, and our tool will instantly extract and display the encoded information, including URLs, text, WiFi credentials, contact information, and more.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <CardTitle className="text-lg">What types of QR codes can I create?</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-slate-600 dark:text-slate-400">
+                      You can create QR codes for URLs, plain text, WiFi credentials, contact cards (vCard), email addresses, phone numbers, SMS messages, geographic locations, calendar events, and WhatsApp messages.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Do I need to sign up to use this tool?</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-slate-600 dark:text-slate-400">
+                      No sign-up is required. Our QR code generator and decoder is completely free and accessible without any registration or account creation.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Are the QR codes I create permanent?</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-slate-600 dark:text-slate-400">
+                      Yes! The QR codes you generate are static and will work forever. Once downloaded, they contain the encoded information permanently and don't require our service to function.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </section>
+
+            {/* Use Cases Section */}
+            <section className="space-y-6">
+              <div className="text-center space-y-3">
+                <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+                  Popular QR Code Use Cases
+                </h2>
+                <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                  Discover how QR codes can simplify your daily tasks
+                </p>
+              </div>
+              <div className="grid md:grid-cols-3 gap-6">
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <Hash className="h-8 w-8 text-blue-600 dark:text-blue-400 mb-2" />
+                    <CardTitle>Website URLs</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Share website links, landing pages, or online portfolios. Perfect for business cards, flyers, and marketing materials.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <Wifi className="h-8 w-8 text-blue-600 dark:text-blue-400 mb-2" />
+                    <CardTitle>WiFi Access</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Create QR codes for WiFi networks. Guests can scan and connect instantly without typing passwords.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <Phone className="h-8 w-8 text-blue-600 dark:text-blue-400 mb-2" />
+                    <CardTitle>Contact Cards</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Share your contact information (vCard) with a single scan. Great for networking events and conferences.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <Mail className="h-8 w-8 text-blue-600 dark:text-blue-400 mb-2" />
+                    <CardTitle>Email & SMS</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Generate QR codes for email addresses or SMS messages with pre-filled content for quick communication.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <MapPin className="h-8 w-8 text-blue-600 dark:text-blue-400 mb-2" />
+                    <CardTitle>Locations</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Share geographic coordinates or addresses. Perfect for event venues, stores, and meeting points.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
+                  <CardHeader>
+                    <Calendar className="h-8 w-8 text-blue-600 dark:text-blue-400 mb-2" />
+                    <CardTitle>Events</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Create calendar event QR codes with date, time, and location. Attendees can add to their calendar instantly.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </section>
+          </div>
+
+          <Separator className="my-12 bg-slate-200 dark:bg-slate-800" />
 
           {/* Footer */}
           <div className="text-center space-y-2 text-slate-600 dark:text-slate-400">
