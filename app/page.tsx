@@ -1,15 +1,38 @@
 "use client";
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import QRCodeDecoder from "qrcode-decoder";
 import parseQRCode from "qrcode-parser";
-import { Upload, Download, Copy, Check, QrCode, Sun, Moon, FileText, Hash, Binary, Info, Wifi, Phone, Mail, MapPin, Calendar } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+import {
+  Upload,
+  Download,
+  Copy,
+  Check,
+  QrCode,
+  Sun,
+  Moon,
+  FileText,
+  Hash,
+  Binary,
+  Info,
+  Wifi,
+  Phone,
+  Mail,
+  MapPin,
+  Calendar,
+} from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 declare global {
   interface Window {
@@ -37,13 +60,13 @@ interface QRCodeAnalysis {
 }
 
 export default function QRCodeApp() {
-  const [activeTab, setActiveTab] = useState<'generate' | 'decode'>('generate');
-  const [text, setText] = useState('');
-  const [qrCodeUrl, setQrCodeUrl] = useState('');
-  const [decodedText, setDecodedText] = useState('');
+  const [activeTab, setActiveTab] = useState<"generate" | "decode">("generate");
+  const [text, setText] = useState("");
+  const [qrCodeUrl, setQrCodeUrl] = useState("");
+  const [decodedText, setDecodedText] = useState("");
   const [qrAnalysis, setQrAnalysis] = useState<QRCodeAnalysis | null>(null);
   const [copied, setCopied] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isDecoding, setIsDecoding] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
   const [librariesLoaded, setLibrariesLoaded] = useState(false);
@@ -54,9 +77,9 @@ export default function QRCodeApp() {
 
   useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
 
@@ -65,16 +88,18 @@ export default function QRCodeApp() {
       try {
         await new Promise<void>((resolve, reject) => {
           if (window.QRCode) return resolve();
-          const script1 = document.createElement('script');
-          script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+          const script1 = document.createElement("script");
+          script1.src =
+            "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
           script1.onload = () => resolve();
           script1.onerror = reject;
           document.head.appendChild(script1);
         });
         await new Promise<void>((resolve, reject) => {
           if (window.jsQR) return resolve();
-          const script2 = document.createElement('script');
-          script2.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js';
+          const script2 = document.createElement("script");
+          script2.src =
+            "https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js";
           script2.onload = () => resolve();
           script2.onerror = reject;
           document.head.appendChild(script2);
@@ -83,7 +108,7 @@ export default function QRCodeApp() {
         setLibrariesLoaded(true);
       } catch (err) {
         console.error("Failed to load external scripts:", err);
-        setError('Failed to load QR code libraries');
+        setError("Failed to load QR code libraries");
       }
     };
 
@@ -92,51 +117,51 @@ export default function QRCodeApp() {
 
   const generateQRCode = () => {
     if (!text.trim()) {
-      setError('Please enter text to generate QR code');
+      setError("Please enter text to generate QR code");
       return;
     }
 
     if (!librariesLoaded || !window.QRCode) {
-      setError('QR Code library is still loading. Please wait...');
+      setError("QR Code library is still loading. Please wait...");
       return;
     }
 
-    setError('');
+    setError("");
 
     try {
-      const container = document.createElement('div');
+      const container = document.createElement("div");
       new window.QRCode(container, {
         text: text,
         width: 300,
         height: 300,
-        colorDark: '#000000',
-        colorLight: '#ffffff',
-        correctLevel: window.QRCode.CorrectLevel.H
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: window.QRCode.CorrectLevel.H,
       });
       setTimeout(() => {
-        const canvas = container.querySelector('canvas');
+        const canvas = container.querySelector("canvas");
         if (canvas) {
           setQrCodeUrl(canvas.toDataURL());
         } else {
-          setError('Failed to generate QR code');
+          setError("Failed to generate QR code");
         }
       }, 100);
     } catch (e) {
       console.error(e);
-      setError('Error generating QR code. Please try again.');
+      setError("Error generating QR code. Please try again.");
     }
   };
 
   const downloadQRCode = () => {
     if (!qrCodeUrl) return;
-    const link = document.createElement('a');
-    link.download = 'qrcode.png';
+    const link = document.createElement("a");
+    link.download = "qrcode.png";
     link.href = qrCodeUrl;
     link.click();
   };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text).catch(() => { });
+    navigator.clipboard.writeText(text).catch(() => {});
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -148,49 +173,55 @@ export default function QRCodeApp() {
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
   const analyzeQRContent = (data: string, jsQRResult?: any): QRCodeAnalysis => {
-    let parsedResultType = 'Text';
+    let parsedResultType = "Text";
     let parsedResult: any = null;
 
     const metadata = {
-      version: jsQRResult && typeof jsQRResult === 'object' ? jsQRResult.version : undefined,
-      errorCorrectionLevel: jsQRResult && typeof jsQRResult === 'object' && jsQRResult.data ? 'Unknown' : undefined,
-      maskPattern: jsQRResult && typeof jsQRResult === 'object' ? jsQRResult.maskPattern : undefined,
-      segments: []
+      version:
+        jsQRResult && typeof jsQRResult === "object"
+          ? jsQRResult.version
+          : undefined,
+      errorCorrectionLevel:
+        jsQRResult && typeof jsQRResult === "object" && jsQRResult.data
+          ? "Unknown"
+          : undefined,
+      maskPattern:
+        jsQRResult && typeof jsQRResult === "object"
+          ? jsQRResult.maskPattern
+          : undefined,
+      segments: [],
     };
 
     if (/^https?:\/\//i.test(data)) {
-      parsedResultType = 'URL';
+      parsedResultType = "URL";
       try {
         const url = new URL(data);
         parsedResult = {
           title: url.hostname,
           url: data,
-          protocol: url.protocol.replace(':', ''),
+          protocol: url.protocol.replace(":", ""),
           domain: url.hostname,
           path: url.pathname,
-          query: url.search ? url.search.substring(1) : null
+          query: url.search ? url.search.substring(1) : null,
         };
       } catch (e) {
         parsedResult = { title: data, url: data };
       }
-    }
-
-    else if (/^WIFI:/i.test(data)) {
-      parsedResultType = 'WiFi';
-      const ssid = (data.match(/S:([^;]*)/) || [])[1] || '';
-      const type = (data.match(/T:([^;]*)/) || [])[1] || '';
-      const password = (data.match(/P:([^;]*)/) || [])[1] || '';
-      const hidden = (data.match(/H:([^;]*)/) || [])[1] || '';
+    } else if (/^WIFI:/i.test(data)) {
+      parsedResultType = "WiFi";
+      const ssid = (data.match(/S:([^;]*)/) || [])[1] || "";
+      const type = (data.match(/T:([^;]*)/) || [])[1] || "";
+      const password = (data.match(/P:([^;]*)/) || [])[1] || "";
+      const hidden = (data.match(/H:([^;]*)/) || [])[1] || "";
       parsedResult = {
         title: ssid,
         ssid,
         password,
-        encryption: type || 'WPA/WPA2',
-        hidden: hidden.toLowerCase() === 'true'
+        encryption: type || "WPA/WPA2",
+        hidden: hidden.toLowerCase() === "true",
       };
-    }
-    else if (/BEGIN:VCARD/i.test(data)) {
-      parsedResultType = 'Contact';
+    } else if (/BEGIN:VCARD/i.test(data)) {
+      parsedResultType = "Contact";
       const nameMatch = data.match(/FN:(.*)/i);
       const phoneMatch = data.match(/TEL(?:;.*)?:([^\n\r]*)/i);
       const emailMatch = data.match(/EMAIL(?:;.*)?:([^\n\r]*)/i);
@@ -199,53 +230,48 @@ export default function QRCodeApp() {
       const urlMatch = data.match(/URL:(.*)/i);
 
       parsedResult = {
-        title: nameMatch ? nameMatch[1] : 'Unknown',
-        name: nameMatch ? nameMatch[1] : 'Unknown',
+        title: nameMatch ? nameMatch[1] : "Unknown",
+        name: nameMatch ? nameMatch[1] : "Unknown",
         phone: phoneMatch ? phoneMatch[1] : null,
         email: emailMatch ? emailMatch[1] : null,
         organization: orgMatch ? orgMatch[1] : null,
         jobTitle: titleMatch ? titleMatch[1] : null,
-        url: urlMatch ? urlMatch[1] : null
+        url: urlMatch ? urlMatch[1] : null,
       };
-    }
-    else if (/^mailto:/i.test(data)) {
-      parsedResultType = 'Email';
+    } else if (/^mailto:/i.test(data)) {
+      parsedResultType = "Email";
       const m = data.match(/^mailto:([^?]*)(?:\?(.*))?$/i);
-      const email = m?.[1] || '';
-      const params = new URLSearchParams(m?.[2] || '');
+      const email = m?.[1] || "";
+      const params = new URLSearchParams(m?.[2] || "");
       parsedResult = {
         title: email,
         email,
-        subject: params.get('subject') || null,
-        body: params.get('body') || null
+        subject: params.get("subject") || null,
+        body: params.get("body") || null,
       };
-    }
-    else if (/^(tel|TEL):/i.test(data)) {
-      parsedResultType = 'Phone';
-      const number = data.replace(/^(tel|TEL):/i, '');
+    } else if (/^(tel|TEL):/i.test(data)) {
+      parsedResultType = "Phone";
+      const number = data.replace(/^(tel|TEL):/i, "");
       parsedResult = { title: number, number };
-    }
-    else if (/^(smsto|SMS):/i.test(data)) {
-      parsedResultType = 'SMS';
+    } else if (/^(smsto|SMS):/i.test(data)) {
+      parsedResultType = "SMS";
       const smsMatch = data.match(/^(?:smsto|SMS):([^:]*):?(.*)?/i);
       parsedResult = {
-        title: smsMatch?.[1] || '',
-        number: smsMatch?.[1] || '',
-        message: smsMatch?.[2] || ''
+        title: smsMatch?.[1] || "",
+        number: smsMatch?.[1] || "",
+        message: smsMatch?.[2] || "",
       };
-    }
-    else if (/^geo:/i.test(data)) {
-      parsedResultType = 'Geo';
+    } else if (/^geo:/i.test(data)) {
+      parsedResultType = "Geo";
       const g = data.match(/^geo:([^,]*),([^,]*)(?:,([^,]*))?/i) || [];
       parsedResult = {
-        title: `${g[1] || ''}, ${g[2] || ''}`,
-        latitude: g[1] || '',
-        longitude: g[2] || '',
-        altitude: g[3] || null
+        title: `${g[1] || ""}, ${g[2] || ""}`,
+        latitude: g[1] || "",
+        longitude: g[2] || "",
+        altitude: g[3] || null,
       };
-    }
-    else if (/BEGIN:VEVENT/i.test(data)) {
-      parsedResultType = 'Calendar Event';
+    } else if (/BEGIN:VEVENT/i.test(data)) {
+      parsedResultType = "Calendar Event";
       const summaryMatch = data.match(/SUMMARY:(.*)/i);
       const startMatch = data.match(/DTSTART:(.*)/i);
       const endMatch = data.match(/DTEND:(.*)/i);
@@ -255,44 +281,53 @@ export default function QRCodeApp() {
       const formatDate = (dateStr: string | undefined) => {
         if (!dateStr) return null;
         if (/^\d{8}$/.test(dateStr)) {
-          return `${dateStr.substring(0, 4)}-${dateStr.substring(4, 6)}-${dateStr.substring(6, 8)}`;
+          return `${dateStr.substring(0, 4)}-${dateStr.substring(
+            4,
+            6
+          )}-${dateStr.substring(6, 8)}`;
         }
         if (/^\d{8}T\d{6}Z?$/.test(dateStr)) {
-          const y = dateStr.substring(0, 4), m = dateStr.substring(4, 6), d = dateStr.substring(6, 8);
-          const hh = dateStr.substring(9, 11), mm = dateStr.substring(11, 13);
+          const y = dateStr.substring(0, 4),
+            m = dateStr.substring(4, 6),
+            d = dateStr.substring(6, 8);
+          const hh = dateStr.substring(9, 11),
+            mm = dateStr.substring(11, 13);
           return `${y}-${m}-${d} ${hh}:${mm}`;
         }
         return dateStr;
       };
 
       parsedResult = {
-        title: summaryMatch ? summaryMatch[1] : 'No title',
+        title: summaryMatch ? summaryMatch[1] : "No title",
         summary: summaryMatch ? summaryMatch[1] : null,
         start: startMatch ? formatDate(startMatch[1]) : null,
         end: endMatch ? formatDate(endMatch[1]) : null,
         location: locationMatch ? locationMatch[1] : null,
-        description: descriptionMatch ? descriptionMatch[1] : null
+        description: descriptionMatch ? descriptionMatch[1] : null,
       };
-    }
-    else if (/^https:\/\/wa\.me\//i.test(data)) {
-      parsedResultType = 'WhatsApp';
+    } else if (/^https:\/\/wa\.me\//i.test(data)) {
+      parsedResultType = "WhatsApp";
       const waMatch = data.match(/https:\/\/wa\.me\/(\d+)(?:\?(.*))?/i);
-      const number = waMatch?.[1] || '';
-      const params = new URLSearchParams(waMatch?.[2] || '');
+      const number = waMatch?.[1] || "";
+      const params = new URLSearchParams(waMatch?.[2] || "");
       parsedResult = {
         title: number,
         number,
-        message: params.get('text') || params.get('message') || null
+        message: params.get("text") || params.get("message") || null,
       };
-    }
-    else {
-      parsedResult = { title: data.length > 50 ? data.substring(0, 47) + '...' : data, text: data };
+    } else {
+      parsedResult = {
+        title: data.length > 50 ? data.substring(0, 47) + "..." : data,
+        text: data,
+      };
     }
     const encoder = new TextEncoder();
     const rawBytesArray = encoder.encode(data);
-    const rawBytes = Array.from(rawBytesArray).map(b => b.toString(16).padStart(2, '0')).join(' ');
+    const rawBytes = Array.from(rawBytesArray)
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join(" ");
 
-    const qrFormat = 'QR_CODE';
+    const qrFormat = "QR_CODE";
 
     return {
       rawText: data,
@@ -300,24 +335,26 @@ export default function QRCodeApp() {
       parsedResult,
       rawBytes,
       qrFormat,
-      metadata
+      metadata,
     };
   };
 
   const decodeFromFile = async (file: File | null) => {
     if (!file) return;
 
-    setError('');
-    setDecodedText('');
+    setError("");
+    setDecodedText("");
     setQrAnalysis(null);
     setIsDecoding(true);
     const imageUrl = URL.createObjectURL(file);
     try {
       const qrDecoder = new QRCodeDecoder();
-      const result = await qrDecoder.decodeFromImage(imageUrl as unknown as string);
-      const rawText = result?.data || '';
+      const result = await qrDecoder.decodeFromImage(
+        imageUrl as unknown as string
+      );
+      const rawText = result?.data || "";
 
-      if (!rawText) throw new Error('No QR data found via qrcode-decoder');
+      if (!rawText) throw new Error("No QR data found via qrcode-decoder");
       let parsed: any = null;
       try {
         parsed = await parseQRCode(rawText);
@@ -325,26 +362,28 @@ export default function QRCodeApp() {
         parsed = null;
       }
 
-      const analysis = parsed && parsed.type
-        ? {
-          rawText,
-          parsedResultType: parsed.type,
-          parsedResult: parsed.data || { content: rawText },
-          rawBytes: Array.from(new TextEncoder().encode(rawText)).map(b => b.toString(16).padStart(2, '0')).join(' '),
-          qrFormat: 'QR_CODE',
-          metadata: {}
-        } as QRCodeAnalysis
-        : analyzeQRContent(rawText, undefined);
+      const analysis =
+        parsed && parsed.type
+          ? ({
+              rawText,
+              parsedResultType: parsed.type,
+              parsedResult: parsed.data || { content: rawText },
+              rawBytes: Array.from(new TextEncoder().encode(rawText))
+                .map((b) => b.toString(16).padStart(2, "0"))
+                .join(" "),
+              qrFormat: "QR_CODE",
+              metadata: {},
+            } as QRCodeAnalysis)
+          : analyzeQRContent(rawText, undefined);
 
       setDecodedText(rawText);
       setQrAnalysis(analysis);
-      setError('');
+      setError("");
       URL.revokeObjectURL(imageUrl);
       setIsDecoding(false);
       return;
     } catch (err) {
       console.warn("qrcode-decoder failed, falling back to jsQR:", err);
-
     }
     try {
       const reader = new FileReader();
@@ -354,13 +393,13 @@ export default function QRCodeApp() {
           const canvas = canvasRef.current;
           if (!canvas) {
             setIsDecoding(false);
-            setError('Canvas not available');
+            setError("Canvas not available");
             return;
           }
-          const ctx = canvas.getContext('2d');
+          const ctx = canvas.getContext("2d");
           if (!ctx) {
             setIsDecoding(false);
-            setError('Canvas context not available');
+            setError("Canvas context not available");
             return;
           }
 
@@ -370,27 +409,31 @@ export default function QRCodeApp() {
 
           const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
           try {
-            const code = window.jsQR ? window.jsQR(imageData.data, imageData.width, imageData.height) : null;
+            const code = window.jsQR
+              ? window.jsQR(imageData.data, imageData.width, imageData.height)
+              : null;
             if (code && code.data) {
               const rawText = code.data;
               const analysis = analyzeQRContent(rawText, code);
               setDecodedText(rawText);
               setQrAnalysis(analysis);
-              setError('');
+              setError("");
             } else {
-              setError('No QR code found in image. Please upload a clear QR code image.');
-              setDecodedText('');
+              setError(
+                "No QR code found in image. Please upload a clear QR code image."
+              );
+              setDecodedText("");
               setQrAnalysis(null);
             }
           } catch (err) {
             console.error(err);
-            setError('Error decoding QR code. Please try again.');
+            setError("Error decoding QR code. Please try again.");
           }
           setIsDecoding(false);
           URL.revokeObjectURL(imageUrl);
         };
         img.onerror = () => {
-          setError('Failed to load image. Please try another file.');
+          setError("Failed to load image. Please try another file.");
           setIsDecoding(false);
           URL.revokeObjectURL(imageUrl);
         };
@@ -401,7 +444,7 @@ export default function QRCodeApp() {
       reader.readAsDataURL(file);
     } catch (err) {
       console.error(err);
-      setError('Error reading file. Please try again.');
+      setError("Error reading file. Please try again.");
       setIsDecoding(false);
       URL.revokeObjectURL(imageUrl);
     }
@@ -410,16 +453,26 @@ export default function QRCodeApp() {
   const getIconForType = (type: string) => {
     const iconClass = "w-5 h-5 text-primary";
     switch (type) {
-      case 'URL': return <Hash className={iconClass} />;
-      case 'WiFi': return <Wifi className={iconClass} />;
-      case 'Contact': return <Phone className={iconClass} />;
-      case 'Email': return <Mail className={iconClass} />;
-      case 'Phone': return <Phone className={iconClass} />;
-      case 'SMS': return <Phone className={iconClass} />;
-      case 'Geo': return <MapPin className={iconClass} />;
-      case 'Calendar Event': return <Calendar className={iconClass} />;
-      case 'WhatsApp': return <Phone className={iconClass} />;
-      default: return <FileText className={iconClass} />;
+      case "URL":
+        return <Hash className={iconClass} />;
+      case "WiFi":
+        return <Wifi className={iconClass} />;
+      case "Contact":
+        return <Phone className={iconClass} />;
+      case "Email":
+        return <Mail className={iconClass} />;
+      case "Phone":
+        return <Phone className={iconClass} />;
+      case "SMS":
+        return <Phone className={iconClass} />;
+      case "Geo":
+        return <MapPin className={iconClass} />;
+      case "Calendar Event":
+        return <Calendar className={iconClass} />;
+      case "WhatsApp":
+        return <Phone className={iconClass} />;
+      default:
+        return <FileText className={iconClass} />;
     }
   };
 
@@ -427,79 +480,185 @@ export default function QRCodeApp() {
     if (!result) return null;
 
     switch (type) {
-      case 'URL':
+      case "URL":
         return (
           <div className="space-y-2">
-            <div className="break-all"><strong>URL:</strong> {result.url}</div>
-            {result.domain && <div><strong>Domain:</strong> {result.domain}</div>}
-            {result.path && result.path !== '/' && <div><strong>Path:</strong> {result.path}</div>}
-            {result.query && <div className="break-all"><strong>Query:</strong> {result.query}</div>}
+            <div className="break-all">
+              <strong>URL:</strong> {result.url}
+            </div>
+            {result.domain && (
+              <div>
+                <strong>Domain:</strong> {result.domain}
+              </div>
+            )}
+            {result.path && result.path !== "/" && (
+              <div>
+                <strong>Path:</strong> {result.path}
+              </div>
+            )}
+            {result.query && (
+              <div className="break-all">
+                <strong>Query:</strong> {result.query}
+              </div>
+            )}
           </div>
         );
-      case 'WiFi':
+      case "WiFi":
         return (
           <div className="space-y-2">
-            <div><strong>SSID:</strong> {result.ssid}</div>
-            {result.password && <div><strong>Password:</strong> {result.password}</div>}
-            {result.encryption && <div><strong>Encryption:</strong> {result.encryption}</div>}
-            {result.hidden !== undefined && <div><strong>Hidden:</strong> {result.hidden ? 'Yes' : 'No'}</div>}
+            <div>
+              <strong>SSID:</strong> {result.ssid}
+            </div>
+            {result.password && (
+              <div>
+                <strong>Password:</strong> {result.password}
+              </div>
+            )}
+            {result.encryption && (
+              <div>
+                <strong>Encryption:</strong> {result.encryption}
+              </div>
+            )}
+            {result.hidden !== undefined && (
+              <div>
+                <strong>Hidden:</strong> {result.hidden ? "Yes" : "No"}
+              </div>
+            )}
           </div>
         );
-      case 'Contact':
+      case "Contact":
         return (
           <div className="space-y-2">
-            <div><strong>Name:</strong> {result.name}</div>
-            {result.phone && <div><strong>Phone:</strong> {result.phone}</div>}
-            {result.email && <div><strong>Email:</strong> {result.email}</div>}
-            {result.organization && <div><strong>Organization:</strong> {result.organization}</div>}
-            {result.jobTitle && <div><strong>Job Title:</strong> {result.jobTitle}</div>}
-            {result.url && <div className="break-all"><strong>URL:</strong> {result.url}</div>}
+            <div>
+              <strong>Name:</strong> {result.name}
+            </div>
+            {result.phone && (
+              <div>
+                <strong>Phone:</strong> {result.phone}
+              </div>
+            )}
+            {result.email && (
+              <div>
+                <strong>Email:</strong> {result.email}
+              </div>
+            )}
+            {result.organization && (
+              <div>
+                <strong>Organization:</strong> {result.organization}
+              </div>
+            )}
+            {result.jobTitle && (
+              <div>
+                <strong>Job Title:</strong> {result.jobTitle}
+              </div>
+            )}
+            {result.url && (
+              <div className="break-all">
+                <strong>URL:</strong> {result.url}
+              </div>
+            )}
           </div>
         );
-      case 'Email':
+      case "Email":
         return (
           <div className="space-y-2">
-            <div><strong>Email:</strong> {result.email}</div>
-            {result.subject && <div><strong>Subject:</strong> {result.subject}</div>}
-            {result.body && <div className="break-all"><strong>Body:</strong> {result.body}</div>}
+            <div>
+              <strong>Email:</strong> {result.email}
+            </div>
+            {result.subject && (
+              <div>
+                <strong>Subject:</strong> {result.subject}
+              </div>
+            )}
+            {result.body && (
+              <div className="break-all">
+                <strong>Body:</strong> {result.body}
+              </div>
+            )}
           </div>
         );
-      case 'Phone':
-        return <div><strong>Number:</strong> {result.number}</div>;
-      case 'SMS':
+      case "Phone":
         return (
-          <div className="space-y-2">
-            <div><strong>Number:</strong> {result.number}</div>
-            {result.message && <div><strong>Message:</strong> {result.message}</div>}
+          <div>
+            <strong>Number:</strong> {result.number}
           </div>
         );
-      case 'Geo':
+      case "SMS":
         return (
           <div className="space-y-2">
-            <div><strong>Latitude:</strong> {result.latitude}</div>
-            <div><strong>Longitude:</strong> {result.longitude}</div>
-            {result.altitude && <div><strong>Altitude:</strong> {result.altitude}</div>}
+            <div>
+              <strong>Number:</strong> {result.number}
+            </div>
+            {result.message && (
+              <div>
+                <strong>Message:</strong> {result.message}
+              </div>
+            )}
           </div>
         );
-      case 'Calendar Event':
+      case "Geo":
         return (
           <div className="space-y-2">
-            <div><strong>Summary:</strong> {result.summary || result.title}</div>
-            {result.start && <div><strong>Start:</strong> {result.start}</div>}
-            {result.end && <div><strong>End:</strong> {result.end}</div>}
-            {result.location && <div><strong>Location:</strong> {result.location}</div>}
-            {result.description && <div className="break-all"><strong>Description:</strong> {result.description}</div>}
+            <div>
+              <strong>Latitude:</strong> {result.latitude}
+            </div>
+            <div>
+              <strong>Longitude:</strong> {result.longitude}
+            </div>
+            {result.altitude && (
+              <div>
+                <strong>Altitude:</strong> {result.altitude}
+              </div>
+            )}
           </div>
         );
-      case 'WhatsApp':
+      case "Calendar Event":
         return (
           <div className="space-y-2">
-            <div><strong>Number:</strong> {result.number}</div>
-            {result.message && <div className="break-all"><strong>Message:</strong> {result.message}</div>}
+            <div>
+              <strong>Summary:</strong> {result.summary || result.title}
+            </div>
+            {result.start && (
+              <div>
+                <strong>Start:</strong> {result.start}
+              </div>
+            )}
+            {result.end && (
+              <div>
+                <strong>End:</strong> {result.end}
+              </div>
+            )}
+            {result.location && (
+              <div>
+                <strong>Location:</strong> {result.location}
+              </div>
+            )}
+            {result.description && (
+              <div className="break-all">
+                <strong>Description:</strong> {result.description}
+              </div>
+            )}
+          </div>
+        );
+      case "WhatsApp":
+        return (
+          <div className="space-y-2">
+            <div>
+              <strong>Number:</strong> {result.number}
+            </div>
+            {result.message && (
+              <div className="break-all">
+                <strong>Message:</strong> {result.message}
+              </div>
+            )}
           </div>
         );
       default:
-        return <div className="break-all">{result.text || JSON.stringify(result)}</div>;
+        return (
+          <div className="break-all">
+            {result.text || JSON.stringify(result)}
+          </div>
+        );
     }
   };
 
@@ -510,11 +669,15 @@ export default function QRCodeApp() {
         <div className="container flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500/20 to-indigo-500/20 dark:from-blue-500/30 dark:to-indigo-500/30 shadow-sm ring-1 ring-blue-500/30 dark:ring-blue-500/40">
-              <QrCode className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+              <QrCode className="h-6 w-6 text-violet-600 dark:text-violet-400" />
             </div>
             <div className="flex flex-col justify-center">
-              <h1 className="text-xl font-bold tracking-tight leading-none text-slate-900 dark:text-slate-100">QR Code Generator</h1>
-              <p className="text-xs text-slate-600 dark:text-slate-400 leading-none mt-0.5">Free & Secure QR Tools</p>
+              <h1 className="text-xl font-bold tracking-tight leading-none text-slate-900 dark:text-slate-100">
+                QR Code Generator
+              </h1>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-none mt-0.5">
+                Free & Secure QR Tools
+              </p>
             </div>
           </div>
 
@@ -534,19 +697,34 @@ export default function QRCodeApp() {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8 md:py-12">
         <div className="mx-auto max-w-4xl">
-          <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'generate' | 'decode')} className="w-full">
+          <Tabs
+            value={activeTab}
+            onValueChange={(value) =>
+              setActiveTab(value as "generate" | "decode")
+            }
+            className="w-full"
+          >
             <TabsList className="grid w-full grid-cols-2 mb-8 bg-slate-100 dark:bg-slate-900">
-              <TabsTrigger value="generate" className="text-base data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800">
+              <TabsTrigger
+                value="generate"
+                className="text-base data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800"
+              >
                 Generate
               </TabsTrigger>
-              <TabsTrigger value="decode" className="text-base data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800">
+              <TabsTrigger
+                value="decode"
+                className="text-base data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800"
+              >
                 <Upload className="mr-2 h-4 w-4" />
                 Decode
               </TabsTrigger>
             </TabsList>
 
             {error && (
-              <Alert variant="destructive" className="mb-6 border-red-200 dark:border-red-900">
+              <Alert
+                variant="destructive"
+                className="mb-6 border-red-200 dark:border-red-900"
+              >
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
@@ -555,12 +733,19 @@ export default function QRCodeApp() {
             <TabsContent value="generate" className="space-y-6">
               <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur">
                 <CardHeader>
-                  <CardTitle className="text-slate-900 dark:text-slate-100">Create QR Code</CardTitle>
-                  <CardDescription className="text-slate-600 dark:text-slate-400">Enter any text or URL to generate a QR code instantly</CardDescription>
+                  <CardTitle className="text-slate-900 dark:text-slate-100">
+                    Create QR Code
+                  </CardTitle>
+                  <CardDescription className="text-slate-600 dark:text-slate-400">
+                    Enter any text or URL to generate a QR code instantly
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <label htmlFor="qr-text" className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                    <label
+                      htmlFor="qr-text"
+                      className="text-sm font-medium text-slate-900 dark:text-slate-100"
+                    >
                       Text or URL
                     </label>
                     <Textarea
@@ -573,7 +758,11 @@ export default function QRCodeApp() {
                     />
                   </div>
 
-                  <Button onClick={generateQRCode} className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600" size="lg">
+                  <Button
+                    onClick={generateQRCode}
+                    className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                    size="lg"
+                  >
                     Generate QR Code
                   </Button>
 
@@ -589,7 +778,12 @@ export default function QRCodeApp() {
                             className="rounded-lg shadow-xl w-64 h-64"
                           />
                         </div>
-                        <Button onClick={downloadQRCode} className="w-full" variant="outline" size="lg">
+                        <Button
+                          onClick={downloadQRCode}
+                          className="w-full"
+                          variant="outline"
+                          size="lg"
+                        >
                           <Download className="mr-2 h-4 w-4" />
                           Download QR Code
                         </Button>
@@ -604,12 +798,18 @@ export default function QRCodeApp() {
             <TabsContent value="decode" className="space-y-6">
               <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur">
                 <CardHeader>
-                  <CardTitle className="text-slate-900 dark:text-slate-100">Decode QR Code</CardTitle>
-                  <CardDescription className="text-slate-600 dark:text-slate-400">Upload a QR code image to extract its content</CardDescription>
+                  <CardTitle className="text-slate-900 dark:text-slate-100">
+                    Decode QR Code
+                  </CardTitle>
+                  <CardDescription className="text-slate-600 dark:text-slate-400">
+                    Upload a QR code image to extract its content
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-lg p-12 text-center hover:border-blue-500 dark:hover:border-blue-400 transition-colors cursor-pointer bg-slate-50 dark:bg-slate-950/50"
-                    onClick={handleFileSelect}>
+                  <div
+                    className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-lg p-12 text-center hover:border-blue-500 dark:hover:border-blue-400 transition-colors cursor-pointer bg-slate-50 dark:bg-slate-950/50"
+                    onClick={handleFileSelect}
+                  >
                     <Upload className="w-16 h-16 mx-auto mb-4 text-slate-400 dark:text-slate-600" />
                     <p className="text-lg mb-4 text-slate-700 dark:text-slate-300">
                       Upload a QR code image to decode
@@ -620,7 +820,7 @@ export default function QRCodeApp() {
                       type="button"
                       className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
                     >
-                      {isDecoding ? 'Decoding...' : 'Choose File'}
+                      {isDecoding ? "Decoding..." : "Choose File"}
                     </Button>
                     <p className="text-xs mt-4 text-slate-500 dark:text-slate-500">
                       Supports: JPG, PNG, GIF, WebP
@@ -631,7 +831,9 @@ export default function QRCodeApp() {
                     ref={fileInputRef}
                     type="file"
                     accept="image/*"
-                    onChange={(e) => decodeFromFile(e.target.files?.[0] || null)}
+                    onChange={(e) =>
+                      decodeFromFile(e.target.files?.[0] || null)
+                    }
                     className="hidden"
                   />
 
@@ -654,25 +856,41 @@ export default function QRCodeApp() {
                             {getIconForType(qrAnalysis.parsedResultType)}
                             QR Code Analysis
                           </CardTitle>
-                          <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900/50 text-blue-900 dark:text-blue-100">{qrAnalysis.parsedResultType}</Badge>
+                          <Badge
+                            variant="secondary"
+                            className="bg-blue-100 dark:bg-blue-900/50 text-blue-900 dark:text-blue-100"
+                          >
+                            {qrAnalysis.parsedResultType}
+                          </Badge>
                         </div>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         <div className="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50">
                           <div className="flex items-start gap-3 p-4 border-b border-slate-200 dark:border-slate-800">
                             <div className="flex-1 min-w-0">
-                              <h4 className="font-semibold mb-2 text-blue-600 dark:text-blue-400">Decoded Content</h4>
+                              <h4 className="font-semibold mb-2 text-blue-600 dark:text-blue-400">
+                                Decoded Content
+                              </h4>
                               <div className="text-sm text-slate-900 dark:text-slate-100">
-                                {renderParsedResult(qrAnalysis.parsedResult, qrAnalysis.parsedResultType)}
+                                {renderParsedResult(
+                                  qrAnalysis.parsedResult,
+                                  qrAnalysis.parsedResultType
+                                )}
                               </div>
                             </div>
                             <Button
                               variant="outline"
                               size="icon"
-                              onClick={() => copyToClipboard(qrAnalysis.rawText)}
+                              onClick={() =>
+                                copyToClipboard(qrAnalysis.rawText)
+                              }
                               className="border-slate-200 dark:border-slate-700"
                             >
-                              {copied ? <Check className="h-4 w-4 text-green-600 dark:text-green-400" /> : <Copy className="h-4 w-4" />}
+                              {copied ? (
+                                <Check className="h-4 w-4 text-green-600 dark:text-green-400" />
+                              ) : (
+                                <Copy className="h-4 w-4" />
+                              )}
                             </Button>
                           </div>
 
@@ -681,7 +899,9 @@ export default function QRCodeApp() {
                               <FileText className="h-4 w-4" />
                               Raw Text
                             </h4>
-                            <p className="text-sm break-all text-slate-900 dark:text-slate-100">{qrAnalysis.rawText}</p>
+                            <p className="text-sm break-all text-slate-900 dark:text-slate-100">
+                              {qrAnalysis.rawText}
+                            </p>
                           </div>
 
                           <div className="p-4 border-b border-slate-200 dark:border-slate-800">
@@ -691,19 +911,35 @@ export default function QRCodeApp() {
                             </h4>
                             <div className="space-y-1 text-sm">
                               <div className="flex items-center gap-2">
-                                <span className="font-medium text-slate-700 dark:text-slate-300">Format:</span>
-                                <Badge variant="outline" className="border-slate-300 dark:border-slate-700">{qrAnalysis.qrFormat}</Badge>
+                                <span className="font-medium text-slate-700 dark:text-slate-300">
+                                  Format:
+                                </span>
+                                <Badge
+                                  variant="outline"
+                                  className="border-slate-300 dark:border-slate-700"
+                                >
+                                  {qrAnalysis.qrFormat}
+                                </Badge>
                               </div>
                               {qrAnalysis.metadata.version && (
                                 <div className="flex items-center gap-2">
-                                  <span className="font-medium text-slate-700 dark:text-slate-300">Version:</span>
-                                  <span className="text-slate-900 dark:text-slate-100">{qrAnalysis.metadata.version}</span>
+                                  <span className="font-medium text-slate-700 dark:text-slate-300">
+                                    Version:
+                                  </span>
+                                  <span className="text-slate-900 dark:text-slate-100">
+                                    {qrAnalysis.metadata.version}
+                                  </span>
                                 </div>
                               )}
-                              {qrAnalysis.metadata.maskPattern !== undefined && (
+                              {qrAnalysis.metadata.maskPattern !==
+                                undefined && (
                                 <div className="flex items-center gap-2">
-                                  <span className="font-medium text-slate-700 dark:text-slate-300">Mask Pattern:</span>
-                                  <span className="text-slate-900 dark:text-slate-100">{qrAnalysis.metadata.maskPattern}</span>
+                                  <span className="font-medium text-slate-700 dark:text-slate-300">
+                                    Mask Pattern:
+                                  </span>
+                                  <span className="text-slate-900 dark:text-slate-100">
+                                    {qrAnalysis.metadata.maskPattern}
+                                  </span>
                                 </div>
                               )}
                             </div>
@@ -714,7 +950,9 @@ export default function QRCodeApp() {
                               <Binary className="h-4 w-4" />
                               Raw Bytes
                             </h4>
-                            <p className="text-xs font-mono break-all text-slate-700 dark:text-slate-300">{qrAnalysis.rawBytes}</p>
+                            <p className="text-xs font-mono break-all text-slate-700 dark:text-slate-300">
+                              {qrAnalysis.rawBytes}
+                            </p>
                           </div>
                         </div>
                       </CardContent>
@@ -734,7 +972,8 @@ export default function QRCodeApp() {
                   Why Choose Our QR Code Generator & Decoder?
                 </h2>
                 <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                  The fastest and most reliable free QR code tool for all your needs
+                  The fastest and most reliable free QR code tool for all your
+                  needs
                 </p>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -747,7 +986,8 @@ export default function QRCodeApp() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Generate and decode unlimited QR codes. No hidden fees, no premium plans, completely free forever.
+                      Generate and decode unlimited QR codes. No hidden fees, no
+                      premium plans, completely free forever.
                     </p>
                   </CardContent>
                 </Card>
@@ -760,7 +1000,8 @@ export default function QRCodeApp() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Start creating and scanning QR codes instantly. No registration, no account required.
+                      Start creating and scanning QR codes instantly. No
+                      registration, no account required.
                     </p>
                   </CardContent>
                 </Card>
@@ -773,7 +1014,8 @@ export default function QRCodeApp() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Download your QR codes as high-quality PNG images ready for print or digital use.
+                      Download your QR codes as high-quality PNG images ready
+                      for print or digital use.
                     </p>
                   </CardContent>
                 </Card>
@@ -786,7 +1028,8 @@ export default function QRCodeApp() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Upload any QR code image and instantly decode URLs, WiFi, contacts, and more.
+                      Upload any QR code image and instantly decode URLs, WiFi,
+                      contacts, and more.
                     </p>
                   </CardContent>
                 </Card>
@@ -817,9 +1060,12 @@ export default function QRCodeApp() {
                         1
                       </div>
                       <div>
-                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">Enter Your Content</h4>
+                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                          Enter Your Content
+                        </h4>
                         <p className="text-sm text-slate-600 dark:text-slate-400">
-                          Type or paste any text, URL, WiFi credentials, or contact information in the input field.
+                          Type or paste any text, URL, WiFi credentials, or
+                          contact information in the input field.
                         </p>
                       </div>
                     </div>
@@ -828,9 +1074,12 @@ export default function QRCodeApp() {
                         2
                       </div>
                       <div>
-                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">Click Generate</h4>
+                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                          Click Generate
+                        </h4>
                         <p className="text-sm text-slate-600 dark:text-slate-400">
-                          Press the "Generate QR Code" button and your QR code will be created instantly.
+                          Press the "Generate QR Code" button and your QR code
+                          will be created instantly.
                         </p>
                       </div>
                     </div>
@@ -839,9 +1088,12 @@ export default function QRCodeApp() {
                         3
                       </div>
                       <div>
-                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">Download & Share</h4>
+                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                          Download & Share
+                        </h4>
                         <p className="text-sm text-slate-600 dark:text-slate-400">
-                          Download your QR code as a PNG image and use it anywhere you need.
+                          Download your QR code as a PNG image and use it
+                          anywhere you need.
                         </p>
                       </div>
                     </div>
@@ -860,9 +1112,12 @@ export default function QRCodeApp() {
                         1
                       </div>
                       <div>
-                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">Upload QR Image</h4>
+                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                          Upload QR Image
+                        </h4>
                         <p className="text-sm text-slate-600 dark:text-slate-400">
-                          Click the upload area and select a QR code image from your device (JPG, PNG, GIF, WebP).
+                          Click the upload area and select a QR code image from
+                          your device (JPG, PNG, GIF, WebP).
                         </p>
                       </div>
                     </div>
@@ -871,9 +1126,12 @@ export default function QRCodeApp() {
                         2
                       </div>
                       <div>
-                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">Automatic Decode</h4>
+                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                          Automatic Decode
+                        </h4>
                         <p className="text-sm text-slate-600 dark:text-slate-400">
-                          Our tool instantly analyzes and decodes the QR code content.
+                          Our tool instantly analyzes and decodes the QR code
+                          content.
                         </p>
                       </div>
                     </div>
@@ -882,9 +1140,12 @@ export default function QRCodeApp() {
                         3
                       </div>
                       <div>
-                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">View Results</h4>
+                        <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                          View Results
+                        </h4>
                         <p className="text-sm text-slate-600 dark:text-slate-400">
-                          See detailed analysis including content type, raw data, and metadata.
+                          See detailed analysis including content type, raw
+                          data, and metadata.
                         </p>
                       </div>
                     </div>
@@ -900,67 +1161,95 @@ export default function QRCodeApp() {
                   Frequently Asked Questions
                 </h2>
                 <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                  Everything you need to know about our QR code generator and decoder
+                  Everything you need to know about our QR code generator and
+                  decoder
                 </p>
               </div>
               <div className="max-w-3xl mx-auto space-y-4">
                 <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
                   <CardHeader>
-                    <CardTitle className="text-lg">Is this QR code generator free?</CardTitle>
+                    <CardTitle className="text-lg">
+                      Is this QR code generator free?
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-slate-600 dark:text-slate-400">
-                      Yes, our QR code generator and decoder is 100% free to use. There are no hidden fees, no sign-up required, and no limits on how many QR codes you can create or decode.
+                      Yes, our QR code generator and decoder is 100% free to
+                      use. There are no hidden fees, no sign-up required, and no
+                      limits on how many QR codes you can create or decode.
                     </p>
                   </CardContent>
                 </Card>
                 <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
                   <CardHeader>
-                    <CardTitle className="text-lg">How do I generate a QR code?</CardTitle>
+                    <CardTitle className="text-lg">
+                      How do I generate a QR code?
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-slate-600 dark:text-slate-400">
-                      Simply enter your text or URL in the generator tab, click "Generate QR Code", and your QR code will be created instantly. You can then download it as a PNG image.
+                      Simply enter your text or URL in the generator tab, click
+                      "Generate QR Code", and your QR code will be created
+                      instantly. You can then download it as a PNG image.
                     </p>
                   </CardContent>
                 </Card>
                 <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
                   <CardHeader>
-                    <CardTitle className="text-lg">Can I decode QR codes from images?</CardTitle>
+                    <CardTitle className="text-lg">
+                      Can I decode QR codes from images?
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-slate-600 dark:text-slate-400">
-                      Yes! Upload any QR code image in the decoder tab, and our tool will instantly extract and display the encoded information, including URLs, text, WiFi credentials, contact information, and more.
+                      Yes! Upload any QR code image in the decoder tab, and our
+                      tool will instantly extract and display the encoded
+                      information, including URLs, text, WiFi credentials,
+                      contact information, and more.
                     </p>
                   </CardContent>
                 </Card>
                 <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
                   <CardHeader>
-                    <CardTitle className="text-lg">What types of QR codes can I create?</CardTitle>
+                    <CardTitle className="text-lg">
+                      What types of QR codes can I create?
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-slate-600 dark:text-slate-400">
-                      You can create QR codes for URLs, plain text, WiFi credentials, contact cards (vCard), email addresses, phone numbers, SMS messages, geographic locations, calendar events, and WhatsApp messages.
+                      You can create QR codes for URLs, plain text, WiFi
+                      credentials, contact cards (vCard), email addresses, phone
+                      numbers, SMS messages, geographic locations, calendar
+                      events, and WhatsApp messages.
                     </p>
                   </CardContent>
                 </Card>
                 <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
                   <CardHeader>
-                    <CardTitle className="text-lg">Do I need to sign up to use this tool?</CardTitle>
+                    <CardTitle className="text-lg">
+                      Do I need to sign up to use this tool?
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-slate-600 dark:text-slate-400">
-                      No sign-up is required. Our QR code generator and decoder is completely free and accessible without any registration or account creation.
+                      No sign-up is required. Our QR code generator and decoder
+                      is completely free and accessible without any registration
+                      or account creation.
                     </p>
                   </CardContent>
                 </Card>
                 <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
                   <CardHeader>
-                    <CardTitle className="text-lg">Are the QR codes I create permanent?</CardTitle>
+                    <CardTitle className="text-lg">
+                      Are the QR codes I create permanent?
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-slate-600 dark:text-slate-400">
-                      Yes! The QR codes you generate are static and will work forever. Once downloaded, they contain the encoded information permanently and don't require our service to function.
+                      Yes! The QR codes you generate are static and will work
+                      forever. Once downloaded, they contain the encoded
+                      information permanently and don't require our service to
+                      function.
                     </p>
                   </CardContent>
                 </Card>
@@ -985,7 +1274,9 @@ export default function QRCodeApp() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Share website links, landing pages, or online portfolios. Perfect for business cards, flyers, and marketing materials.
+                      Share website links, landing pages, or online portfolios.
+                      Perfect for business cards, flyers, and marketing
+                      materials.
                     </p>
                   </CardContent>
                 </Card>
@@ -996,7 +1287,8 @@ export default function QRCodeApp() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Create QR codes for WiFi networks. Guests can scan and connect instantly without typing passwords.
+                      Create QR codes for WiFi networks. Guests can scan and
+                      connect instantly without typing passwords.
                     </p>
                   </CardContent>
                 </Card>
@@ -1007,7 +1299,8 @@ export default function QRCodeApp() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Share your contact information (vCard) with a single scan. Great for networking events and conferences.
+                      Share your contact information (vCard) with a single scan.
+                      Great for networking events and conferences.
                     </p>
                   </CardContent>
                 </Card>
@@ -1018,7 +1311,8 @@ export default function QRCodeApp() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Generate QR codes for email addresses or SMS messages with pre-filled content for quick communication.
+                      Generate QR codes for email addresses or SMS messages with
+                      pre-filled content for quick communication.
                     </p>
                   </CardContent>
                 </Card>
@@ -1029,7 +1323,8 @@ export default function QRCodeApp() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Share geographic coordinates or addresses. Perfect for event venues, stores, and meeting points.
+                      Share geographic coordinates or addresses. Perfect for
+                      event venues, stores, and meeting points.
                     </p>
                   </CardContent>
                 </Card>
@@ -1040,7 +1335,8 @@ export default function QRCodeApp() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Create calendar event QR codes with date, time, and location. Attendees can add to their calendar instantly.
+                      Create calendar event QR codes with date, time, and
+                      location. Attendees can add to their calendar instantly.
                     </p>
                   </CardContent>
                 </Card>
